@@ -1,8 +1,17 @@
 import axios from 'axios';
+import Config from './../config/Config';
 
+// All Axios calls to TMDB are contained
+// within this class. This keeps us from littering
+// our App with Axios calls and should we change
+// our AJAX library it can easily be replaced in this
+// one module
 class MovieData {
   search(searchType, movieName){
-    var apiKey = "";
+      
+    // Build the URL we will make our GET request to
+    var config = new Config();
+    var apiKey = config.getApiKey();
     var baseUrl = "https://api.themoviedb.org/3/search/"
     var requestURL = baseUrl + searchType
                    + "?api_key=" + apiKey
@@ -11,18 +20,9 @@ class MovieData {
                    + "&page=1"
                    + "&include_adult=false";
     
-    
-    axios.get(requestURL)
-      .then(function(response, callback){
-        var storedResults = {
-          title: response[0].title,
-          year: response[0].release_date,
-          rating: response[0].popularity
-        };
-      })
-      .catch(function(error){
-        return error;
-      });  
+    // Return our promise so we can set state
+    // in the calling React component
+    return axios.get(requestURL);  
   }
 }
 
