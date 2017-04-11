@@ -7,7 +7,7 @@ import Config from './../config/Config';
 // our AJAX library it can easily be replaced in this
 // one module
 class MovieData {
-  search(searchType, movieName){
+  search(searchType, movieName){ 
       
     // Build the URL we will make our GET request to
     var config = new Config();

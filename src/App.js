@@ -4,6 +4,10 @@ import SearchContainer from './containers/SearchContainer';
 import MovieInfoContainer from './containers/MovieInfoContainer';
 
 class App extends Component {
+  someOtherFunc(){
+    console.log('Function');
+  }
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -14,8 +18,8 @@ class App extends Component {
     };
     
     // Bind this react component to the 'this' keyword in our functions
+    this.handleSearchFieldChange = this.handleSearchFieldChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
-    this.handleSearchFieldChange = this.handleSearchFieldChange(this);
   }
   
   
@@ -48,27 +52,33 @@ class App extends Component {
       this.setState({
           searchString: searchFieldString
       });
-      console.log(this.state.searchString);
   }
 
 
-  handleSearchClick(response) {
+  handleSearchClick(promise) {
       // Update our state with the Axios response data.
-      // Passed down to SearchContainer >> Button
+      // This function is passed down to SearchContainer >> Button
       
-      this.setState({
-          title: response.data.results[0].title,
-          year: response.data.results[0].release_date,
-          rating: response.data.results[0].vote_average
+      promise
+        .then(function(response){
+            this.setState({
+                title: response.data.results[0].title,
+                year: response.data.results[0].release_date,
+                rating: response.data.results[0].vote_average
+            });
+        }.bind(this))
+        .catch(function(error){
+            console.log(error);
         });
   }
     
+    
   render() {
-      console.log(this);
     return (
       <div>
-        <h1>Hello World!</h1>
+        <h1>CineApp</h1>
         <SearchContainer
+            searchString={this.state.searchString}
             searchClickHandler={this.handleSearchClick}
             searchFieldChangeHandler={this.handleSearchFieldChange} />
         

@@ -4,12 +4,10 @@ import SearchField from './../components/SearchField';
 
 class SearchContainer extends Component {
     render() {
-        console.log(this.props);
-        
         return (
             <div className="searchContainer">
                 <SearchField changeHandler={this.props.searchFieldChangeHandler} />
-                <Button onClick={this.props.searchClickHandler} />
+                <Button clickHandler={this.props.searchClickHandler} searchString={this.props.searchString} />
             </div>
         );
     }

@@ -11,7 +11,6 @@ class SearchField extends Component {
     }
     
     handleChange(event){
-        console.log(event.target.value);
         this.props.changeHandler(event.target.value);
     }
     
