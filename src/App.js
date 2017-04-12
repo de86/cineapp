@@ -8,13 +8,12 @@ class App extends Component {
     console.log('Function');
   }
   
+    
   constructor(props) {
     super(props);
     this.state = {
       searchString: "",
-      title: "",
-      year: "",
-      rating: null
+      searchResult: []
     };
     
     // Bind this react component to the 'this' keyword in our functions
@@ -24,19 +23,17 @@ class App extends Component {
   
   
   componentDidMount() {
-    // Do our Axios get request of movie data after component
-    // has been succesfully added to the DOM. This ensures
-    // that the component is in the DOM when setState
-    // re-renders it
+  // Do our Axios get request of movie data after component
+  // has been succesfully added to the DOM. This ensures
+  // that the component is in the DOM when setState
+  // re-renders it
       
     var md = new movieData();
     
     md.search("movie", "Lord of the rings")
         .then(function (response){
             this.setState({
-              title: response.data.results[0].title,
-              year: response.data.results[0].release_date,
-              rating: response.data.results[0].vote_average
+              searchResult: response.data.results
             });
         }.bind(this))
         .catch(function (error){
@@ -46,8 +43,8 @@ class App extends Component {
 
 
   handleSearchFieldChange(searchFieldString) {
-      // Update our searchString used to query the TMDB library
-      // Passed down to SearchContainer >> SearchField
+  // Update our searchString used to query the TMDB library
+  // Passed down to SearchContainer >> SearchField
       
       this.setState({
           searchString: searchFieldString
@@ -56,15 +53,13 @@ class App extends Component {
 
 
   handleSearchClick(promise) {
-      // Update our state with the Axios response data.
-      // This function is passed down to SearchContainer >> Button
+  // save our results in state from our response data.
+  // This function is passed down to SearchContainer >> Button
       
       promise
         .then(function(response){
             this.setState({
-                title: response.data.results[0].title,
-                year: response.data.results[0].release_date,
-                rating: response.data.results[0].vote_average
+                searchResult: response.data.results
             });
         }.bind(this))
         .catch(function(error){
@@ -82,10 +77,7 @@ class App extends Component {
             searchClickHandler={this.handleSearchClick}
             searchFieldChangeHandler={this.handleSearchFieldChange} />
         
-        <MovieInfoContainer
-            title={this.state.title}
-            year={this.state.year}
-            rating={this.state.rating} />
+        <MovieInfoContainer results={this.state.searchResult} />
       </div>
     );
   }

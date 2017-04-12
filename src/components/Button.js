@@ -8,12 +8,17 @@ class Button extends Component {
       this.handleClick = this.handleClick.bind(this);
     }
   
+    
     handleClick() {
+    // Query TMDB with our search string and return the promise
+    // back to app so we can save the results in state
+        
       var md = new movieData();
       var promise = md.search("movie", this.props.searchString);
       this.props.clickHandler(promise);
     }
   
+    
     render() {
         return(
           <button className="search" onClick={this.handleClick}>
