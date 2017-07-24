@@ -3,6 +3,7 @@ import MovieInfo from '../components/MovieInfo';
 
 class MovieInfoContainer extends Component {
     render() {
+        console.log(this.props.results);
         return (
           <div>
             {
@@ -11,7 +12,7 @@ class MovieInfoContainer extends Component {
                     <MovieInfo
                         title={ movie.title }
                         releaseDate={ movie.release_date }
-                        rating = { movie.vote_average } />
+                        rating={ movie.vote_average } />
                 );
               })
             }
