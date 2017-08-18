@@ -12,8 +12,7 @@ class SearchField extends Component {
     
     
     handleChange(event){
-    // Pass our search string back to App so we can save it in state
-        
+        // Pass our search string back to App so we can save it in state
         this.props.changeHandler(event.target.value);
     }
     
